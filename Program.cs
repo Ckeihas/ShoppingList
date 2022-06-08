@@ -8,24 +8,36 @@ namespace ShoppingList
     {
         static void Main(string[] args)
         {
+            string path = @"C:\Users\ChristianKeihäs\Testi.txt";
+
             Console.WriteLine("Lisää tuote: ");
             string input = Console.ReadLine();
-            string path = @"C:\users\ChristianKeihäs\Testi.txt";
 
-          
-        if(File.Exists(path))
+            if (File.Exists(path))
             {
-                string createText = input + Environment.NewLine;
-                File.WriteAllText(path, createText, Encoding.UTF8);
-               
+                File.AppendAllText(path, input + Environment.NewLine);
+                try
+                {
+                    String[] lines;
+                    lines = File.ReadAllLines(path);
+
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        Console.WriteLine(lines[i]);
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine("Tiedostoa ei voida lukea");
+                    Console.WriteLine(e.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Tiedostoa ei löydy");
             }
 
-            string appendText = "NewLine" + Environment.NewLine;
-            File.AppendAllText(path, appendText, Encoding.UTF8);
-
-            string readText = File.ReadAllText(path);
-            Console.WriteLine(readText);
-           
         }
     }
 }
